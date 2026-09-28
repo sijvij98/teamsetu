@@ -11,11 +11,16 @@ each company can only ever see its own data.
 2. **New project** → name it `teamsetu` → set a database password (save it!) → pick the region nearest to you → Create.
 3. Wait ~2 minutes for the project to start.
 
-### 2. Create the tables (one copy-paste)
+### 2. Create the tables (two copy-pastes)
 1. In Supabase, open **SQL Editor** → **New query**.
 2. Copy the full contents of `supabase/schema.sql` from this repo
    (https://github.com/sijvij98/teamsetu/blob/main/supabase/schema.sql), paste it in, and press **Run**.
 3. You should see "Success. No rows returned".
+4. **New query** again → copy the full contents of
+   `supabase/migrations/002_notifications.sql`
+   (https://github.com/sijvij98/teamsetu/blob/main/supabase/migrations/002_notifications.sql),
+   paste it in, and press **Run**. This adds the in-app notification inbox
+   (the bell icon in the dashboard header).
 
 ### 3. Turn off email confirmation (so logins work instantly)
 **Authentication → Sign In / Up** → under "Email", turn **OFF** "Confirm email".
@@ -46,6 +51,21 @@ In the Vercel project → **Settings → Environment Variables**, add:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 Then **Redeploy**. Done — the live site now talks to the real database.
+
+### 7. Email notifications (optional, free)
+The dashboard already shows an in-app notification bell for every event:
+leave applied / approved / declined, offer sent / accepted, onboarding
+checklist started. To also send **real emails** for these events:
+
+1. Sign up free at https://resend.com (100 emails/day, no credit card).
+2. Verify your sender domain (or use their test domain while trying it out).
+3. Create an API key and add it in Vercel → **Settings → Environment Variables**:
+   - `RESEND_API_KEY`
+   - `NOTIFY_FROM` — e.g. `TeamSetu <notifications@yourdomain.com>`
+4. Redeploy.
+
+Without these keys, everything still works — notifications simply stay
+in-app only. Nothing breaks.
 
 ## Demo logins (change these passwords after testing)
 - **HR Admin:** priya.nair@nexaflowtech.in — full access
