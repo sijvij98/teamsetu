@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Chatbot from "./Chatbot";
 
 const BARE_ROUTES = ["/dashboard", "/login", "/signup"];
 
@@ -17,6 +18,7 @@ export default function Chrome({ children }) {
       <Navbar />
       <main>{children}</main>
       <Footer />
+      <Chatbot />
     </>
   );
 }
