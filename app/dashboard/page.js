@@ -66,6 +66,7 @@ function Overview() {
       <div className="panel">
         <h3>Onboarding in progress</h3>
         <p className="psub">New hires from the last 30 days</p>
+        <div className="tbl-wrap">
         <table className="tbl">
           <thead><tr><th>Employee</th><th>Department</th><th>Start date</th><th>Progress</th></tr></thead>
           <tbody>
@@ -87,6 +88,7 @@ function Overview() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );
@@ -103,7 +105,7 @@ function Directory() {
         <div><h3>Employee directory</h3><p className="psub" style={{ margin: 0 }}>{rows.length} of {EMPLOYEES.length} shown</p></div>
         <input className="search" placeholder="Search name, role, dept…" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
-      <div style={{ overflowX: "auto" }}>
+      <div className="tbl-wrap">
         <table className="tbl">
           <thead><tr><th>Employee</th><th>Department</th><th>Role</th><th>Location</th><th>Status</th></tr></thead>
           <tbody>
@@ -197,6 +199,14 @@ export default function Dashboard() {
             <p>{user.company} · {tab === "Overview" ? "Here's what's happening today." : "Demo data for illustration."}</p>
           </div>
           <input className="search" placeholder="Search employees, reports…" />
+        </div>
+
+        <div className="dash-tabs">
+          {NAV.map(([t, ico]) => (
+            <button key={t} className={`dash-tab ${tab === t ? "on" : ""}`} onClick={() => setTab(t)}>
+              <i>{ico}</i> {t}
+            </button>
+          ))}
         </div>
 
         {tab === "Overview" && <Overview />}

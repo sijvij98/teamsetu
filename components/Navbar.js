@@ -1,23 +1,51 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
+const LINKS = [
+  ["Features", "/features"],
+  ["Pricing", "/pricing"],
+  ["Customers", "/#testimonials"],
+  ["FAQ", "/#faq"],
+];
+
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <span className="brand-mark">TS</span> TeamSetu
         </Link>
         <nav className="nav-links">
-          <Link href="/features">Features</Link>
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/#testimonials">Customers</Link>
-          <Link href="/#faq">FAQ</Link>
+          {LINKS.map(([t, h]) => (
+            <Link key={t} href={h}>{t}</Link>
+          ))}
         </nav>
         <div className="nav-actions">
-          <Link href="/login" className="btn btn-ghost btn-sm">Log in</Link>
+          <Link href="/login" className="btn btn-ghost btn-sm hide-sm">Log in</Link>
           <Link href="/signup" className="btn btn-primary btn-sm">Start free trial</Link>
+          <button
+            className="nav-toggle"
+            aria-label="Menu"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? "✕" : "☰"}
+          </button>
         </div>
       </div>
+      {open && (
+        <div className="container">
+          <nav className="mobile-menu">
+            {LINKS.map(([t, h]) => (
+              <Link key={t} href={h} onClick={() => setOpen(false)}>{t}</Link>
+            ))}
+            <Link href="/login" onClick={() => setOpen(false)}>Log in</Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

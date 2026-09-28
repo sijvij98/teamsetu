@@ -81,7 +81,7 @@ export default function Pricing() {
           <div className="center" style={{ marginTop: 64 }}>
             <h2 className="h2">Compare plans</h2>
           </div>
-          <div className="panel" style={{ overflowX: "auto", marginTop: 24 }}>
+          <div className="panel tbl-wrap" style={{ marginTop: 24 }}>
             <table className="tbl">
               <thead><tr><th>Feature</th><th>Essentials</th><th>Growth</th><th>Enterprise</th></tr></thead>
               <tbody>
