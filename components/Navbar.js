@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const LINKS = [
@@ -12,9 +12,17 @@ const LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="nav">
+    <header className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="container nav-inner">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <span className="brand-mark">TS</span> TeamSetu
