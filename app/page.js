@@ -159,7 +159,7 @@ export default function Home() {
           </Reveal>
           <div className="stat-grid">
             <Reveal delay={1}><div className="stat"><b><CountUp to={2000} suffix="+" /></b><p>companies run their HR on TeamSetu</p></div></Reveal>
-            <Reveal delay={2}><div className="stat"><b><CountUp to={48} suffix="/5" /></b><p>average customer rating across review sites</p></div></Reveal>
+            <Reveal delay={2}><div className="stat"><b><CountUp to={4.8} decimals={1} suffix="/5" /></b><p>average customer rating across review sites</p></div></Reveal>
             <Reveal delay={3}><div className="stat"><b><CountUp to={98} suffix="%" /></b><p>of customers renew TeamSetu every year</p></div></Reveal>
           </div>
         </div>
