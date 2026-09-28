@@ -18,6 +18,9 @@ export default function Login() {
     setBusy(true);
     try {
       const supabase = getSupabase();
+      if (!supabase) {
+        throw new Error("The login server is not connected yet. Please ask the site owner to finish the database setup (supabase/SETUP.md), then try again.");
+      }
       const { error } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password,

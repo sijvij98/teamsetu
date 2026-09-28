@@ -19,6 +19,9 @@ export default function Signup() {
     setBusy(true);
     try {
       const supabase = getSupabase();
+      if (!supabase) {
+        throw new Error("The signup server is not connected yet. Please ask the site owner to finish the database setup (supabase/SETUP.md), then try again.");
+      }
       // 1. Create the login
       const { data, error } = await supabase.auth.signUp({
         email: form.email.trim(),

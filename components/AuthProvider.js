@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { getSupabase } from "../lib/supabaseClient";
+import { getSupabase, hasSupabaseConfig } from "../lib/supabaseClient";
 
 const AuthCtx = createContext(null);
 
@@ -10,9 +10,14 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null);
   const [company, setCompany] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [configured] = useState(hasSupabaseConfig());
 
   useEffect(() => {
     const supabase = getSupabase();
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
     let alive = true;
 
     async function load(sessionUser) {
@@ -38,12 +43,13 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function signOut() {
-    await getSupabase().auth.signOut();
+    const supabase = getSupabase();
+    if (supabase) await supabase.auth.signOut();
     window.location.href = "/login";
   }
 
   return (
-    <AuthCtx.Provider value={{ user, profile, company, loading, signOut }}>
+    <AuthCtx.Provider value={{ user, profile, company, loading, signOut, configured }}>
       {children}
     </AuthCtx.Provider>
   );

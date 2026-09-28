@@ -37,10 +37,16 @@ function todayISO() {
 function useCompanyData(refreshKey) {
   const [data, setData] = useState({ employees: [], leaves: [], tasks: [], offers: [] });
   const [loading, setLoading] = useState(true);
+  const [unconfigured, setUnconfigured] = useState(false);
   useEffect(() => {
+    const supabase = getSupabase();
+    if (!supabase) {
+      setUnconfigured(true);
+      setLoading(false);
+      return;
+    }
     let alive = true;
     (async () => {
-      const supabase = getSupabase();
       const [e, l, t, o] = await Promise.all([
         supabase.from("employees").select("*").order("name"),
         supabase.from("leave_requests").select("*, employees(name, department)").order("created_at", { ascending: false }),
@@ -58,7 +64,22 @@ function useCompanyData(refreshKey) {
     })();
     return () => { alive = false; };
   }, [refreshKey]);
-  return { ...data, loading };
+  return { ...data, loading, unconfigured };
+}
+
+function NotConfigured() {
+  return (
+    <div className="panel center" style={{ padding: "70px 30px" }}>
+      <div style={{ fontSize: 44, marginBottom: 14 }}>🔌</div>
+      <h3>Database not connected yet</h3>
+      <p className="psub" style={{ maxWidth: 480, margin: "0 auto" }}>
+        This dashboard needs its Supabase database. The site owner must add
+        <b> NEXT_PUBLIC_SUPABASE_URL</b> and <b>NEXT_PUBLIC_SUPABASE_ANON_KEY</b> in
+        Vercel → Settings → Environment Variables, then redeploy. See
+        <b> supabase/SETUP.md</b> in the repo for the 5-minute setup.
+      </p>
+    </div>
+  );
 }
 
 /* ---------------- Overview ---------------- */
@@ -482,7 +503,7 @@ export default function Dashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
   const { user, profile, company, loading, signOut } = useAuth();
   const router = useRouter();
-  const { employees, leaves, tasks, offers, loading: dataLoading } = useCompanyData(refreshKey);
+  const { employees, leaves, tasks, offers, loading: dataLoading, unconfigured } = useCompanyData(refreshKey);
   const bump = () => setRefreshKey((k) => k + 1);
 
   const emp = employees.find((e) => e.email === user?.email);
@@ -529,7 +550,9 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {dataLoading ? (
+        {unconfigured ? (
+          <NotConfigured />
+        ) : dataLoading ? (
           <div className="panel center" style={{ padding: 60 }}><p className="psub">Fetching live data…</p></div>
         ) : (
           <>
