@@ -175,6 +175,14 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); font-weight: 800; }
 .stat b { font-size: clamp(34px, 3.4vw, 46px); color: var(--green-700); display: block; letter-spacing: -0.02em; }
 .stat p { color: var(--ink-soft); margin: 10px 0 0; line-height: 1.6; }
 
+/* ---------- offer letter print ---------- */
+@media print {
+  .dash-side, .dash-top, .dash-tabs, .no-print, .chatbot-wrap, .chat-fab { display: none !important; }
+  .dash { display: block; }
+  .dash-main { margin: 0; padding: 0; }
+  .offer-doc { border: 0 !important; border-radius: 0 !important; max-width: 100% !important; }
+}
+
 /* ---------- equal-height cards: no card taller than its siblings ---------- */
 .announce-grid > *, .save-grid > *, .testi-grid > *, .stat-grid > *, .grid-3 > * { display: flex; }
 .announce-card, .save-card, .testi, .stat, .feat { height: 100%; }

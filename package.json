@@ -1,1 +1,1 @@
-{"dependencies":{"next":"14.2.5","react":"^18","react-dom":"^18"},"name":"teamsetu","private":true,"scripts":{"build":"next build","dev":"next dev","start":"next start"},"version":"1.0.0"}
+{"dependencies":{"@supabase/ssr":"^0.12.7","@supabase/supabase-js":"^2.117.2","next":"14.2.5","react":"^18","react-dom":"^18"},"name":"teamsetu","private":true,"scripts":{"build":"next build","dev":"next dev","start":"next start"},"version":"1.0.0","devDependencies":{"postgres":"^3.4.9"}}
