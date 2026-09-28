@@ -9,10 +9,11 @@ import {
   AdminOverview, Directory, TimeOffAdmin, OnboardingAdmin, OfferLettersAdmin,
 } from "../../components/dashboard/views-admin";
 import { EmployeeHome, MyLeave, MyOnboarding } from "../../components/dashboard/views-employee";
+import { TimeClock, WorkLog, AttendanceAdmin } from "../../components/dashboard/views-attendance";
 
 /* ---------------- data hook ---------------- */
 function useCompanyData(refreshKey) {
-  const [data, setData] = useState({ employees: [], leaves: [], tasks: [], offers: [] });
+  const [data, setData] = useState({ employees: [], leaves: [], tasks: [], offers: [], attendance: [], tickets: [] });
   const [loading, setLoading] = useState(true);
   const [unconfigured, setUnconfigured] = useState(false);
   useEffect(() => {
@@ -24,11 +25,13 @@ function useCompanyData(refreshKey) {
     }
     let alive = true;
     (async () => {
-      const [e, l, t, o] = await Promise.all([
+      const [e, l, t, o, a, k] = await Promise.all([
         supabase.from("employees").select("*").order("name"),
         supabase.from("leave_requests").select("*, employees(name, department, email)").order("created_at", { ascending: false }),
         supabase.from("onboarding_tasks").select("*, employees(name, department, joining_date)").order("due_date"),
         supabase.from("offer_letters").select("*, employees(name, email)").order("created_at", { ascending: false }),
+        supabase.from("attendance").select("*").order("work_date", { ascending: false }).limit(2000),
+        supabase.from("daily_tickets").select("*, employees(name, department, email)").order("work_date", { ascending: false }).limit(500),
       ]);
       if (!alive) return;
       setData({
@@ -36,6 +39,8 @@ function useCompanyData(refreshKey) {
         leaves: l.data || [],
         tasks: t.data || [],
         offers: o.data || [],
+        attendance: a.data || [],
+        tickets: k.data || [],
       });
       setLoading(false);
     })();
@@ -66,7 +71,7 @@ export default function Dashboard() {
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
   const bump = () => setRefreshKey((k) => k + 1);
-  const { employees, leaves, tasks, offers, loading: dataLoading, unconfigured } = useCompanyData(refreshKey);
+  const { employees, leaves, tasks, offers, attendance, tickets, loading: dataLoading, unconfigured } = useCompanyData(refreshKey);
 
   const role = profile?.role || "employee";
   const isAdmin = role === "admin" || role === "hr";
@@ -86,15 +91,17 @@ export default function Dashboard() {
   const me = employees.find((e) => e.id === profile?.employee_id)
     || employees.find((e) => e.email && user?.email && e.email.toLowerCase() === user.email.toLowerCase());
   const notifCount = isAdmin ? leaves.filter((l) => l.status === "pending").length : 0;
+  const attendCount = isAdmin ? tickets.filter((t) => t.status === "submitted").length : 0;
   const nav = isAdmin ? ADMIN_NAV : EMP_NAV;
 
   return (
-    <Shell nav={nav} tab={tab} setTab={setTab} notifCount={notifCount} displayName={me?.name}>
+    <Shell nav={nav} tab={tab} setTab={setTab} notifCount={notifCount} attendCount={attendCount} displayName={me?.name}>
       {dataLoading ? (
         <p className="muted">Fetching live data…</p>
       ) : isAdmin ? (
         <>
           {tab === "overview" && <AdminOverview employees={employees} leaves={leaves} tasks={tasks} offers={offers} bump={bump} />}
+          {tab === "attendance" && <AttendanceAdmin attendance={attendance} tickets={tickets} employees={employees} me={me} bump={bump} />}
           {tab === "directory" && <Directory employees={employees} />}
           {tab === "timeoff" && <TimeOffAdmin leaves={leaves} bump={bump} />}
           {tab === "onboarding" && <OnboardingAdmin employees={employees} tasks={tasks} company={company} bump={bump} />}
@@ -103,6 +110,8 @@ export default function Dashboard() {
       ) : (
         <>
           {tab === "home" && <EmployeeHome employees={employees} leaves={leaves} tasks={tasks} me={me} bump={bump} go={setTab} />}
+          {tab === "clock" && <TimeClock attendance={attendance} me={me} bump={bump} />}
+          {tab === "worklog" && <WorkLog tickets={tickets} me={me} bump={bump} />}
           {tab === "leave" && <MyLeave leaves={leaves} me={me} company={company} bump={bump} />}
           {tab === "onboarding" && <MyOnboarding tasks={tasks} me={me} bump={bump} />}
           {tab === "directory" && <Directory employees={employees} />}

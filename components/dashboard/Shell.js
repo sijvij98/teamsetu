@@ -10,6 +10,7 @@ import { Avatar, Icon, greeting } from "./ui";
 
 export const ADMIN_NAV = [
   ["overview", "Overview", Icon.home],
+  ["attendance", "Attendance", Icon.clock],
   ["directory", "Directory", Icon.users],
   ["timeoff", "Time Off", Icon.calendar],
   ["onboarding", "Onboarding", Icon.rocket],
@@ -18,6 +19,8 @@ export const ADMIN_NAV = [
 
 export const EMP_NAV = [
   ["home", "Home", Icon.home],
+  ["clock", "Time Clock", Icon.clock],
+  ["worklog", "Work Log", Icon.doc],
   ["leave", "My Leave", Icon.calendar],
   ["onboarding", "Onboarding", Icon.rocket],
   ["directory", "Directory", Icon.users],
@@ -25,11 +28,14 @@ export const EMP_NAV = [
 
 const TITLES = {
   overview: ["Overview", "Your workspace at a glance"],
+  attendance: ["Attendance", "Time log, work logs and time edits"],
   directory: ["Directory", "Everyone in the company"],
   timeoff: ["Time Off", "Leave requests and balances"],
   onboarding: ["Onboarding", "New joiners and checklists"],
   offers: ["Offer Letters", "Create and track offers"],
   home: ["Home", "Your day at a glance"],
+  clock: ["Time Clock", "Clock in, take breaks and clock out"],
+  worklog: ["Work Log", "Share what you worked on with your manager"],
   leave: ["My Leave", "Balances, requests and history"],
 };
 
@@ -108,7 +114,7 @@ function NotifBell() {
   );
 }
 
-export default function Shell({ nav, tab, setTab, notifCount, displayName, children }) {
+export default function Shell({ nav, tab, setTab, notifCount, attendCount = 0, displayName, children }) {
   const { user, profile, company, signOut } = useAuth();
   const name = displayName || user?.email?.split("@")[0] || "there";
   const first = name.split(" ")[0];
@@ -128,6 +134,7 @@ export default function Shell({ nav, tab, setTab, notifCount, displayName, child
               <span className="dash-link-ic">{icon}</span>
               <span className="dash-link-tx">{label}</span>
               {key === "timeoff" && notifCount > 0 && <span className="dash-badge">{notifCount}</span>}
+              {key === "attendance" && attendCount > 0 && <span className="dash-badge">{attendCount}</span>}
             </button>
           ))}
         </nav>

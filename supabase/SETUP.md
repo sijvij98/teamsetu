@@ -17,10 +17,11 @@ each company can only ever see its own data.
    (https://github.com/sijvij98/teamsetu/blob/main/supabase/schema.sql), paste it in, and press **Run**.
 3. You should see "Success. No rows returned".
 4. **New query** again → copy the full contents of
-   `supabase/migrations/002_notifications.sql`
-   (https://github.com/sijvij98/teamsetu/blob/main/supabase/migrations/002_notifications.sql),
-   paste it in, and press **Run**. This adds the in-app notification inbox
-   (the bell icon in the dashboard header).
+   `supabase/migrations/003_attendance_tickets.sql`
+   (https://github.com/sijvij98/teamsetu/blob/main/supabase/migrations/003_attendance_tickets.sql),
+   paste it in, and press **Run**. This adds the time clock (clock in, lunch
+   and coffee breaks, clock out) and the daily work logs that employees share
+   with their manager for review.
 
 ### 3. Turn off email confirmation (so logins work instantly)
 **Authentication → Sign In / Up** → under "Email", turn **OFF** "Confirm email".
