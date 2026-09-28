@@ -362,7 +362,7 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); font-weight: 800; }
 }
 .cta-band h2 { color: #fff; position: relative; z-index: 1; }
 .cta-band p { color: rgba(255,255,255,0.82); position: relative; z-index: 1; }
-.cta-band .cta-row { position: relative; z-index: 1; }
+.cta-band .cta-row { position: relative; z-index: 1; justify-content: center; align-items: center; }
 
 /* ---------- footer ---------- */
 footer { background: var(--green-800); color: rgba(255,255,255,0.78); margin-top: 88px; }
