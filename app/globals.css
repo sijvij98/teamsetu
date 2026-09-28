@@ -193,12 +193,12 @@ footer { border-top: 1px solid var(--border); padding: 60px 0 32px; margin-top: 
 
 /* ---------- Auth ---------- */
 .auth-wrap { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
-@media (max-width: 900px) { .auth-wrap { grid-template-columns: 1fr; } .auth-side { display: none; } }
 .auth-side { background: linear-gradient(150deg, #065f46, #047857); color: #fff; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
 .auth-side h2 { font-size: 34px; letter-spacing: -0.02em; margin: 0 0 16px; }
 .auth-side p { opacity: 0.85; line-height: 1.7; }
 .auth-side ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; }
 .auth-side li { display: flex; gap: 12px; align-items: center; opacity: 0.95; }
+@media (max-width: 900px) { .auth-wrap { grid-template-columns: 1fr; } .auth-side { display: none; } }
 .auth-form-col { display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
 .auth-card { width: 100%; max-width: 420px; }
 .auth-card h1 { font-size: 30px; margin: 0 0 8px; letter-spacing: -0.02em; }
@@ -215,7 +215,6 @@ footer { border-top: 1px solid var(--border); padding: 60px 0 32px; margin-top: 
 
 /* ---------- Dashboard ---------- */
 .dash { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; background: var(--soft); }
-@media (max-width: 900px) { .dash { grid-template-columns: 1fr; } .dash-side { display: none; } }
 .dash-side { background: #0f172a; color: #cbd5e1; padding: 24px 16px; display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; height: 100vh; }
 .dash-side .brand { color: #fff; margin-bottom: 26px; padding: 0 8px; }
 .dash-link { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 10px; font-size: 14.5px; font-weight: 600; cursor: pointer; border: 0; background: none; color: inherit; width: 100%; text-align: left; font-family: inherit; }
@@ -224,6 +223,7 @@ footer { border-top: 1px solid var(--border); padding: 60px 0 32px; margin-top: 
 .dash-link.on i { color: var(--green-500); }
 .dash-link i { font-style: normal; width: 22px; text-align: center; }
 .dash-user { margin-top: auto; display: flex; gap: 10px; align-items: center; padding: 12px 8px 0; border-top: 1px solid #1e293b; font-size: 13.5px; }
+@media (max-width: 900px) { .dash { grid-template-columns: 1fr; } .dash-side { display: none; } }
 .dash-main { padding: 28px 32px; max-width: 1120px; }
 .dash-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 26px; flex-wrap: wrap; }
 .dash-top h1 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
