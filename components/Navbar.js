@@ -47,7 +47,7 @@ export default function Navbar() {
       {open && (
         <div className="container">
           <nav className="mobile-menu open">
-            <Link href="/signup" className="btn btn-primary menu-cta" onClick={() => setOpen(false)}>Start free trial</Link>
+            <Link href="/signup" className="menu-cta" onClick={() => setOpen(false)}>Start free trial <span aria-hidden="true">→</span></Link>
             {LINKS.map(([t, h]) => (
               <Link key={t} href={h} onClick={() => setOpen(false)}>{t}</Link>
             ))}
