@@ -46,7 +46,7 @@ export default function Navbar() {
       </div>
       {open && (
         <div className="container">
-          <nav className="mobile-menu">
+          <nav className="mobile-menu open">
             {LINKS.map(([t, h]) => (
               <Link key={t} href={h} onClick={() => setOpen(false)}>{t}</Link>
             ))}

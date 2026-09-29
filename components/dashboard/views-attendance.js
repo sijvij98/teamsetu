@@ -161,7 +161,7 @@ export function TimeClock({ attendance, me, bump }) {
       </div>
 
       <Panel title="This week" sub="Your daily totals">
-        <div className="tbl-wrap"><table className="tbl">
+        <div className="tbl-wrap2"><table className="tbl2">
           <thead><tr><th>Day</th><th>Clock in</th><th>Clock out</th><th>Breaks</th><th>Worked</th></tr></thead>
           <tbody>
             {week.map(({ iso, row: r }) => (
@@ -373,7 +373,7 @@ function TimeLogAdmin({ attendance, employees, bump }) {
     <>
       <Panel title="Time log" sub="Who clocked in, breaks and hours — click edit to fix any entry"
         action={<input type="date" value={date} max={localISO()} onChange={(e) => setDate(e.target.value)} />}>
-        <div className="tbl-wrap"><table className="tbl">
+        <div className="tbl-wrap2"><table className="tbl2">
           <thead><tr><th>Employee</th><th>Status</th><th>Clock in</th><th>Lunch</th><th>Coffee</th><th>Clock out</th><th>Worked</th><th></th></tr></thead>
           <tbody>
             {rows.map(({ emp, rec }) => {
